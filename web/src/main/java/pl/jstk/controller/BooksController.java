@@ -10,6 +10,8 @@ import pl.jstk.service.BookService;
 import pl.jstk.to.BookTo;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class BooksController {
@@ -53,5 +55,17 @@ public class BooksController {
     public String searchPage(Model model) {
         model.addAttribute("searchBook", new BookTo());
         return "search";
+    }
+
+    @PostMapping(value = "/search")
+    public String searchBooks(Model model, @ModelAttribute("searchBook") BookTo book) {
+        String title = book.getTitle();
+        String authors = book.getAuthors();
+        List<BookTo> result = new ArrayList<>();
+        if(title != null && authors != null) {
+            result = bookService.findBooksByAuthorAndTitle(authors, title);
+        }
+        model.addAttribute("bookList", result);
+        return ViewNames.BOOKS;
     }
 }

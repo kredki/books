@@ -9,6 +9,8 @@ import pl.jstk.constants.ViewNames;
 import pl.jstk.service.BookService;
 import pl.jstk.to.BookTo;
 
+import javax.validation.Valid;
+
 @Controller
 public class BooksController {
     private static final String BOOK_ADDED = "Book added.";
@@ -37,7 +39,7 @@ public class BooksController {
     }
 
     @PostMapping(value = "/greeting")
-    public String addBook(Model model, @ModelAttribute("newBook") BookTo bookToAdd) {
+    public String addBook(Model model, @ModelAttribute("newBook") @Valid BookTo bookToAdd) {
         BookTo savedBook = bookService.saveBook(bookToAdd);
         if(savedBook != null) {
             model.addAttribute(ModelConstants.INFO, BOOK_ADDED);

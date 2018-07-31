@@ -3,10 +3,7 @@ package pl.jstk.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.jstk.constants.ModelConstants;
 import pl.jstk.constants.ViewNames;
 import pl.jstk.service.BookService;
@@ -15,6 +12,7 @@ import pl.jstk.to.BookTo;
 @Controller
 public class BooksController {
     private static final String BOOK_ADDED = "Book added.";
+    private static final String BOOK_NOT_ADDED = "Book added.";
     protected static final String WELCOME = "This is a welcome page";
 
     @Autowired
@@ -39,10 +37,12 @@ public class BooksController {
     }
 
     @PostMapping(value = "/greeting")
-    public String addBook(Model model, @RequestBody BookTo bookToAdd) {
+    public String addBook(Model model, @ModelAttribute("newBook") BookTo bookToAdd) {
         BookTo savedBook = bookService.saveBook(bookToAdd);
         if(savedBook != null) {
             model.addAttribute(ModelConstants.INFO, BOOK_ADDED);
+        } else {
+            model.addAttribute(ModelConstants.INFO, BOOK_NOT_ADDED);
         }
         return ViewNames.WELCOME;
     }

@@ -17,6 +17,7 @@ import java.util.List;
 public class BooksController {
     private static final String BOOK_ADDED = "Book added.";
     private static final String BOOK_NOT_ADDED = "Book added.";
+    private static final String BOOK_DELETED = "Book deleted.";
     protected static final String WELCOME = "This is a welcome page";
 
     @Autowired
@@ -66,6 +67,14 @@ public class BooksController {
             result = bookService.findBooksByAuthorAndTitle(authors, title);
         }
         model.addAttribute("bookList", result);
+        return ViewNames.BOOKS;
+    }
+
+    @GetMapping(value = "/delete/book")
+    public String deleteBook(@RequestParam(value = "id")long id, Model model) {
+        bookService.deleteBook(id);
+        model.addAttribute(ModelConstants.INFO, BOOK_DELETED);
+        model.addAttribute("bookList", bookService.findAllBooks());
         return ViewNames.BOOKS;
     }
 }

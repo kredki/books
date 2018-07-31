@@ -1,14 +1,17 @@
 package pl.jstk.to;
 
 import pl.jstk.enumerations.BookStatus;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class BookTo {
     private Long id;
     @NotNull
+    @NotBlank
     private String title;
     @NotNull
+    @NotBlank
     private String authors;
     @NotNull
     private BookStatus status;

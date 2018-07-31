@@ -12,12 +12,12 @@ public class HomeController {
 
     private static final String INFO_TEXT = "Here You shall display information containing information about newly created TO";
     protected static final String WELCOME = "This is a welcome page";
+    private static final String LOGIN = "This is a login page";
 
-    @GetMapping(value = "/")
+    @GetMapping(value = {"/", "/welcome"})
     public String welcome(Model model) {
         model.addAttribute(ModelConstants.MESSAGE, WELCOME);
         model.addAttribute(ModelConstants.INFO, INFO_TEXT);
         return ViewNames.WELCOME;
     }
-
 }

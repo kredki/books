@@ -1,11 +1,12 @@
 package pl.jstk.controller;
 
-import pl.jstk.constants.ModelConstants;
-import pl.jstk.constants.ViewNames;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import pl.jstk.constants.ModelConstants;
+import pl.jstk.constants.ViewNames;
+
+import java.security.Principal;
 
 @Controller
 public class HomeController {
@@ -22,7 +23,18 @@ public class HomeController {
     }
 
     @GetMapping(value = "/403")
-    public String permissionDenied(Model model) {
+    public String accesssDenied(Principal user, Model model) {
+
+
+        if (user != null) {
+            model.addAttribute("msg", "Hi " + user.getName()
+                    + ", you do not have permission to access this page!");
+        } else {
+            model.addAttribute("msg",
+                    "You do not have permission to access this page!");
+        }
+
         return ViewNames.PERMISSION_DENIED;
+
     }
 }

@@ -24,6 +24,7 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
                 .logout().clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/403.html");
+                //.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
     }
 
     @Override
@@ -33,7 +34,7 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AccessDeniedHandler accessDeniedHandler(){
+    public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
 }

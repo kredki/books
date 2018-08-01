@@ -1,5 +1,6 @@
 package pl.jstk.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -19,29 +21,19 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/webjars/**", "/css/*", "/img/*").permitAll()
                 .anyRequest().authenticated().and().formLogin().loginPage("/login").permitAll().defaultSuccessUrl("/welcome")
                 .and()
-                .logout().clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").deleteCookies("JSESSIONID")
-                .invalidateHttpSession(true)
+                .logout().clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/403.html");
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.inMemoryAuthentication().withUser("admin").password("admin").roles("ADMIN")
-        //      .and().withUser("user").password("user").roles("USER");
         auth.inMemoryAuthentication().withUser(User.withUsername("user").password("{noop}user").roles("USER").build());
         auth.inMemoryAuthentication().withUser(User.withUsername("admin").password("{noop}admin").roles("ADMIN").build());
+    }
 
-
-    /*@Autowired
-    DataSource dataSource;
-
-    @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select username,password, enabled from user where username=?")
-                .authoritiesByUsernameQuery("select username, role from user_roles where username=?");
-    }*/
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new CustomAccessDeniedHandler();
     }
 }

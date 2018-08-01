@@ -78,7 +78,7 @@ public class BooksController {
     @GetMapping(value = "/delete/book")
     public String deleteBook(@RequestParam(value = "id")long id, Model model) {
         bookService.deleteBook(id);
-        model.addAttribute(ModelConstants.INFO, BOOK_DELETED);
+        model.addAttribute("deleted", BOOK_DELETED);
         model.addAttribute("bookList", bookService.findAllBooks());
         return ViewNames.BOOKS;
     }

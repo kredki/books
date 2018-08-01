@@ -20,9 +20,9 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li  style="display: inline-block;">
+                    <li style="display: inline-block;" sec:authorize="isAuthenticated()">
                         <a th:href="@{/logout}"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
-                    <li  style="display: inline-block;"><a th:href="@{/login}"><span
+                    <li  style="display: inline-block;"><a th:href="@{/login}" sec:authorize="isAnonymous()"><span
                             class="glyphicon glyphicon-log-in"></span> Login</a></li>
                 </ul>
             </div>

@@ -1,7 +1,6 @@
 package pl.jstk.service.impl;
 
 
-
 import java.util.List;
 
 import pl.jstk.entity.BookEntity;
@@ -46,8 +45,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookTo> findBooksById(long id) {
-        return BookMapper.map2To(bookRepository.findBookById(id));
+    public BookTo findBooksById(long id) {
+        return BookMapper.map(bookRepository.findBookById(id));
     }
 
     @Override

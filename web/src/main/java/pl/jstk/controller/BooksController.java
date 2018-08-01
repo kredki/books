@@ -35,7 +35,7 @@ public class BooksController {
 
     @GetMapping(value = "/books/book")
     public String book(@RequestParam(value = "id")long id, Model model) {
-        model.addAttribute("book", bookService.findBooksById(id).get(0));
+        model.addAttribute("book", bookService.findBooksById(id));
         return ViewNames.BOOK;
     }
 

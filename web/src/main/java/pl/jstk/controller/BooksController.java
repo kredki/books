@@ -31,6 +31,7 @@ public class BooksController {
     public String books(Model model) {
         model.addAttribute("bookList", bookService.findAllBooks());
         return ViewNames.BOOKS;
+
     }
 
     @GetMapping(value = "/books/book")

@@ -1,8 +1,8 @@
 package pl.jstk.service;
 
-import java.util.List;
-
 import pl.jstk.to.BookTo;
+
+import java.util.List;
 
 public interface BookService {
 

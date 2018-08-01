@@ -1,9 +1,13 @@
 package pl.jstk.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import pl.jstk.constants.ModelConstants;
 import pl.jstk.constants.ViewNames;
 import pl.jstk.service.BookService;
@@ -70,6 +74,7 @@ public class BooksController {
         return ViewNames.BOOKS;
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/delete/book")
     public String deleteBook(@RequestParam(value = "id")long id, Model model) {
         bookService.deleteBook(id);

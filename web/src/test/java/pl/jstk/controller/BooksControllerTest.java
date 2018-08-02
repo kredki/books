@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.web.FilterChainProxy;
@@ -320,6 +321,9 @@ public class BooksControllerTest {
     @Test
     @WithMockUser(username = "john", roles = {"USER"})
     public void shouldNotRemoveBook() throws Exception {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        System.out.println(encoder.encode("admin"));
+        System.out.println(encoder.encode("user"));
         // given
         List<BookTo> books = new ArrayList<>();
         books.add(new BookTo());

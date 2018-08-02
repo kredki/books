@@ -39,21 +39,21 @@ public class BasicConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
     }
 
-    @Override
+    /*@Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser(User.withUsername("user2").password("{noop}user").roles("USER").build());
         auth.inMemoryAuthentication().withUser(User.withUsername("admin2").password("{noop}admin").roles("ADMIN").build());
-    }
+    }*/
 
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
 
-    @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select user_name, password from user where user_name=?")
+                .usersByUsernameQuery("select user_name, password, 'true' as enabled from user where user_name=?")
                 .authoritiesByUsernameQuery("select user_name, role from user where user_name=?");
     }
 

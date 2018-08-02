@@ -301,4 +301,34 @@ public class BooksControllerTest {
         // then
         resultActions.andExpect(status().is3xxRedirection()).andDo(print());
     }
+
+    @Test
+    @WithMockUser(username = "john", roles = {"ADMIN"})
+    public void shouldRemoveBook() throws Exception {
+        // given
+        List<BookTo> books = new ArrayList<>();
+        books.add(new BookTo());
+        Mockito.when(bookService.findAllBooks()).thenReturn(books);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get("/delete/book?id=1"));
+
+        // then
+        resultActions.andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @WithMockUser(username = "john", roles = {"USER"})
+    public void shouldNotRemoveBook() throws Exception {
+        // given
+        List<BookTo> books = new ArrayList<>();
+        books.add(new BookTo());
+        Mockito.when(bookService.findAllBooks()).thenReturn(books);
+
+        // when
+        ResultActions resultActions = mockMvc.perform(get("/delete/book?id=1"));
+
+        // then
+        resultActions.andExpect(status().isForbidden()).andDo(print());
+    }
 }

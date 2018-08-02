@@ -60,7 +60,7 @@ public class BooksController {
     @GetMapping(value = "/books/search")
     public String searchPage(Model model) {
         model.addAttribute("searchBook", new BookTo());
-        return "search";
+        return ViewNames.SEARCH;
     }
 
     @PostMapping(value = "/search")
